@@ -1,0 +1,55 @@
+version: '3'
+
+volumes:
+  postgres:
+  tendenci:
+
+services:
+    postgresql:
+        restart: always
+        image: mdillon/postgis:latest
+        volumes:
+            - postgres:/var/lib/postgresql
+        environment:
+            - POSTGRES_PASSWORD=T3nd3nc1!
+        ports:
+            - 5432:5432
+        networks:
+            - backend
+    memcached: 
+        restart: always
+        image: memcached:1.6.6
+        networks:
+            - backend
+    tendenci:
+        command: ['dev']
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - tendenci:/tendenci
+            - ~/tendenci/tendenci:/srv/mysite/lib/python3.7/site-packages/tendenci
+        depends_on:
+            - postgresql
+            - memcached
+        ports:
+            - 8080:8000
+        networks:
+            - backend
+        environment:
+            - SECRET_KEY=h$mdv6=(@f=iu@lnl38$z&)z=1dgf#*b46)z1(--*#tcle0tqi
+            - SITE_SETTINGS_KEY=2oby8f)k@ipv100ferxdp59r)u)+&+22t%gujbg+oc!o)p^wb-
+            - db_host=postgresql
+            - db_name=postgres
+            - db_port=5432
+            - db_user=postgres
+            - db_password=T3nd3nc1!
+            - ec_host=memcached
+            - ALLOWED_HOSTS=127.0.0.1
+            - urlpatterns=url(r'^tickets/', include('tendenci.apps.helpdesk.urls')),url(r'^oauth2/',include('tendenci.apps.oauth2_client.urls'))
+            - debug=true
+
+networks:
+    backend:
+        driver: bridge
