@@ -47,7 +47,6 @@ services:
             - db_password=T3nd3nc1!
             - ec_host=memcached
             - ALLOWED_HOSTS=127.0.0.1
-            - urlpatterns=url(r'^tickets/', include('tendenci.apps.helpdesk.urls')),url(r'^oauth2/',include('tendenci.apps.oauth2_client.urls'))
             - debug=true
 
 networks:
