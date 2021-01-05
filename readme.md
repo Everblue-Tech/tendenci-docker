@@ -68,3 +68,14 @@ This repo includes a docker-compose file to use for local development. You can s
 git clone https://github.com/tendenci/tendenci ~/tendenci
 docker-compose up
 ```
+
+##Note:
+You will have to set up tendenci for local development by running: 
+`python3 tendenci.py startproject mysite`
+from within the `tendenci/tendenci/bin/` folder.
+
+Then copy the theme you would like to use into your newly created project from the `tendenci/themes` folder
+
+`cp -r ~/tedenci/themes/t7-base ~/tendenci/tendenci/bin/mysite/themes`
+
+```
