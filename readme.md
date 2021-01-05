@@ -63,8 +63,26 @@ Username: admin
 Password: password
  
 ## Local Development
+For local development, you can run the included script which will clone tendenci to your home directory,
+create a tendenci project, install the t7-base theme, and then run `docker-compose up`
+
+**Note**
+The script ends with `docker-compose down` which will remove all your containers and any information in them,
+if you'd like to have your data be persistant with the container, change the last line to `docker-compose stop`
+
+### To manually install without the script
+
 This repo includes a docker-compose file to use for local development. You can set up your local development environment with the following steps:
 ```shell
 git clone https://github.com/tendenci/tendenci ~/tendenci
 docker-compose up
 ```
+
+You will have to set up tendenci for local development by running: 
+`python3 tendenci.py startproject mysite`
+from within the `tendenci/tendenci/bin/` folder.
+
+Then copy the theme you would like to use into your newly created project from the `tendenci/themes` folder
+
+`cp -r ~/tedenci/themes/t7-base ~/tendenci/tendenci/bin/mysite/themes`
+
